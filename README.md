@@ -12,8 +12,8 @@ access_token=xxx
 access_token_secret=xxx
 
 # for cotoha API
-clientId=xxx
-clientSecret=xxx
+client_id=xxx
+client_secret=xxx
 ```
 
 ```bash

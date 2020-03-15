@@ -36,8 +36,8 @@ export default class Cotoha {
     try {
       const res = await axios.post(COTOHA_AUTH_ENDPOINT, {
         grantType: "client_credentials",
-        clientId: process.env.clientId,
-        clientSecret: process.env.clientSecret,
+        clientId: process.env.client_id,
+        clientSecret: process.env.client_secret,
       });
       this.bearerToken = res.data.access_token;
     } catch(e) {
