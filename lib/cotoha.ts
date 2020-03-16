@@ -33,16 +33,19 @@ export default class Cotoha {
   }
 
   async authenticate() {
-    try {
-      const res = await axios.post(COTOHA_AUTH_ENDPOINT, {
-        grantType: "client_credentials",
-        clientId: process.env.client_id,
-        clientSecret: process.env.client_secret,
-      });
-      this.bearerToken = res.data.access_token;
-    } catch(e) {
-      console.error("authenticate:", e);
-      throw e;
+    console.log("Cotoha initialize", process.env.client_id);
+    if(process.env.client_id) {
+      try {
+        const res = await axios.post(COTOHA_AUTH_ENDPOINT, {
+          grantType: "client_credentials",
+          clientId: process.env.client_id,
+          clientSecret: process.env.client_secret,
+        });
+        this.bearerToken = res.data.access_token;
+      } catch(e) {
+        console.error("authenticate:", e);
+        throw e;
+      }
     }
   }
 

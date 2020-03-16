@@ -3,26 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node --project tsconfig.server.json server/server.ts",
+    "dev": "next",
     "build": "next build",
-    "start": "NODE_ENV=production node server/server.js"
+    "start": "NODE_ENV=production next start"
   },
   "dependencies": {
+    "@now/node": "^1.4.1",
     "axios": "^0.19.2",
     "date-fns": "^2.11.0",
     "dotenv": "^8.2.0",
-    "koa": "^2.11.0",
-    "koa-body": "^4.1.1",
-    "koa-router": "^8.0.8",
-    "next": "9.2.2",
+    "next": "9.3.0",
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "styled-components": "^5.0.1",
     "twit": "^2.2.11"
   },
   "devDependencies": {
-    "@types/koa": "^2.11.2",
-    "@types/koa-router": "^7.4.0",
     "@types/node": "^13.7.5",
     "@types/react": "^16.9.23",
     "@types/styled-components": "^5.0.1",

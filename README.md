@@ -14,6 +14,9 @@ access_token_secret=xxx
 # for cotoha API
 client_id=xxx
 client_secret=xxx
+
+# for this app endpoint
+APP_ENDPOINT=https://xxx
 ```
 
 ```bash

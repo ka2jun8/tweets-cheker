@@ -87,13 +87,25 @@ const Home = ({ size, contents }: Props) => {
   );
 };
 
+function getEndpoint() {
+  const config = getConfig();
+  if(config && config.publicRuntimeConfig) {
+    return config.publicRuntimeConfig.APP_ENDPOINT;
+  }
+  if(process && process.env.APP_ENDPOINT) {
+    return process.env.APP_ENDPOINT;
+  }
+  return "";
+}
+
 Home.getInitialProps = async (ctx: NextPageContext) => {
   const {q} = ctx.query;
   if(!q) {
     return { size: 0, contents: {} };
   }
-  const { publicRuntimeConfig } = getConfig();
-  const res = await axios.get(`${publicRuntimeConfig.APP_ENDPOINT}/tweets`, {params: {q}})
+  
+  const apiEndpoint = getEndpoint();
+  const res = await axios.get(`${apiEndpoint}/api/tweets`, {params: {q}})
   return res.data;
 };
 
