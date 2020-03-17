@@ -4,18 +4,22 @@ export default class Twitter {
   initialized: boolean;
   T: Twit
 
-  constructor() {
-    this.initialize();
+  constructor(secrets) {
+    this.initialize(secrets);
   }
 
-  private async initialize() {
-    console.log("Twit initialize", process.env.consumer_key);
-    if(process.env.consumer_key) {
+  private async initialize({
+    consumer_key,
+    consumer_secret,
+    access_token,
+    access_token_secret,
+  }) {
+    if(consumer_key) {
       this.T = new Twit({
-        consumer_key: process.env.consumer_key,
-        consumer_secret: process.env.consumer_secret,
-        access_token: process.env.access_token,
-        access_token_secret: process.env.access_token_secret,
+        consumer_key: consumer_key,
+        consumer_secret: consumer_secret,
+        access_token: access_token,
+        access_token_secret: access_token_secret,
         timeout_ms: 60*1000,
         strictSSL: true,
       });

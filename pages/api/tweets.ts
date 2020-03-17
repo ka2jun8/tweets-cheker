@@ -41,16 +41,30 @@ export default async (req: NowRequest, res: NowResponse) => {
     return res.json({size: 0, contents: [], updatedAt: now});
   }
 
+  const {
+    consumer_key,
+    consumer_secret,
+    access_token,
+    access_token_secret,
+    client_id,
+    client_secret,
+  } = process.env;
+
   try {
     if(!cotoha) {
       console.log("create cotoha instance");
-      cotoha = new Cotoha();
+      cotoha = new Cotoha({ client_id, client_secret });
       await cotoha.initialize();
     }
   
     if(!twit) {
       console.log("create twit instance");
-      twit = new Twitter();
+      twit = new Twitter({
+        consumer_key,
+        consumer_secret,
+        access_token,
+        access_token_secret,
+      });
     }
   
     const statuses = await twit.search(q);

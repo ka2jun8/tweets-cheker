@@ -16,9 +16,16 @@ interface CotohaResult {
 };
 
 export default class Cotoha {
+  clientId: string;
+  clientSecret: string;
   initialized: boolean = false;
   bearerToken: string;
   authTokenInterval: number;
+
+  constructor({client_id, client_secret}) {
+    this.clientId = client_id;
+    this.clientSecret = client_secret;
+  }
 
   async initialize() {
     try {
@@ -33,13 +40,12 @@ export default class Cotoha {
   }
 
   async authenticate() {
-    console.log("Cotoha initialize", process.env.client_id);
-    if(process.env.client_id) {
+    if(this.clientId && this.clientSecret) {
       try {
         const res = await axios.post(COTOHA_AUTH_ENDPOINT, {
           grantType: "client_credentials",
-          clientId: process.env.client_id,
-          clientSecret: process.env.client_secret,
+          clientId: this.clientId,
+          clientSecret: this.clientSecret,
         });
         this.bearerToken = res.data.access_token;
       } catch(e) {
