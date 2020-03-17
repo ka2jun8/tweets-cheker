@@ -10,6 +10,6 @@ module.exports = {
     client_secret: process.env.client_secret,
   },
   publicRuntimeConfig: {
-    APP_ENDPOINT: process.env.APP_ENDPOINT || "http://localhost:3000",
+    APP_ENDPOINT: process.env.APP_ENDPOINT || "http://localhost:3000/api",
   },
 };

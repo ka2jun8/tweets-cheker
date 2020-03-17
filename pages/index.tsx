@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useState, useCallback } from "react";
 import getConfig from "next/config";
+import fetch from "isomorphic-unfetch";
 
 type Props = {
   size: number;
@@ -87,26 +88,31 @@ const Home = ({ size, contents }: Props) => {
   );
 };
 
-function getEndpoint() {
+function getEndpoint(req: NextPageContext["req"]) {
+  if(!req) {
+    return "/api";
+  }
+
+  if (req.headers["x-now-deployment-url"]) {
+    return `https://${req.headers['x-now-deployment-url']}/api`
+  }
+  
   const config = getConfig();
-  if(config && config.publicRuntimeConfig) {
+  if(config && config.publicRuntimeConfig != null) {
     return config.publicRuntimeConfig.APP_ENDPOINT;
   }
-  if(process && process.env.APP_ENDPOINT) {
-    return process.env.APP_ENDPOINT;
-  }
-  return "";
+  return "/api";
 }
 
 Home.getInitialProps = async (ctx: NextPageContext) => {
   const {q} = ctx.query;
-  if(!q) {
+  if(!q || q.length <= 0) {
     return { size: 0, contents: {} };
   }
   
-  const apiEndpoint = getEndpoint();
-  const res = await axios.get(`${apiEndpoint}/api/tweets`, {params: {q}})
-  return res.data;
+  const apiEndpoint = getEndpoint(ctx.req);
+  const res = await fetch(`${apiEndpoint}/tweets?q=${encodeURIComponent(q as string)}`)
+  return res.json();
 };
 
 export default Home

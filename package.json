@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "date-fns": "^2.11.0",
     "dotenv": "^8.2.0",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "9.3.0",
     "react": "16.12.0",
     "react-dom": "16.12.0",
