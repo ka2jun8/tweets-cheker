@@ -25,16 +25,16 @@ type ResponseBody = {
 
 let cotoha: Cotoha = null;
 let twit: Twitter = null;
-const weakTweets: {[keyword: string]: ResponseBody} = {};
+const weakCache: {[keyword: string]: ResponseBody} = {};
 
 export default async (req: NowRequest, res: NowResponse) => {
   const query = req.query;
   const q = query.q as string;
 
   const now = new Date();
-  if(weakTweets[q] && isBefore(now, addHours(weakTweets[q].updatedAt, 12))) {
+  if(weakCache[q] && isBefore(now, addHours(weakCache[q].updatedAt, 12))) {
     res.statusCode = 200;
-    return res.json(weakTweets[q]);
+    return res.json(weakCache[q]);
   }
 
   if(!q) {
@@ -97,7 +97,7 @@ export default async (req: NowRequest, res: NowResponse) => {
         },
       });
     });
-    weakTweets[q] = response;
+    weakCache[q] = response;
     res.json(response);
   } catch(e) {
     console.error("tweets:", e);
